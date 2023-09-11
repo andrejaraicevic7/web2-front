@@ -12,7 +12,8 @@ import { LoginModel } from "../../Models/LoginModel";
 import { ProductModel } from "../../Models/ProductModel";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { CssBaseline, Paper } from "@mui/material";
 
 export default function SignIn() {
 
@@ -56,71 +57,111 @@ export default function SignIn() {
   }
   
   return (
-    <Container component="main" maxWidth="sm">
+<div style={{ 
+      backgroundImage: `url("https://img.freepik.com/free-vector/abstract-sky-background-with-glowing-wave_1017-18388.jpg?w=1800&t=st=1694465219~exp=1694465819~hmac=49c2ab6a88d737540840a1eb8d3e2d810387ef77024ed0ab0527482939de7e2b")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
+    <Container component="main" maxWidth="lg">
+        <div><Toaster/></div>
       <Box
-        sx={{
-          boxShadow: 3,
-          borderRadius: 2,
-          px: 4,
-          py: 6,
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
       >
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            onChange={(e)=>{setEmail(e.target.value)}}
-            autoFocus
+        <Grid container>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage: "url('https://images.pexels.com/photos/4968391/pexels-photo-4968391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e)=>{setPassword(e.target.value)}}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography component="h1" variant="h5">
+                Sign in to make your first order!
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(e)=>{setEmail(e.target.value)}}
+
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onChange={(e)=>{setPassword(e.target.value)}}
+
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Login
+                </Button>
+                <Grid container style={{marginTop:"10px"}}
+                 display="flex"
+                 justifyContent="center"
+                 alignItems="center">
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
           </Grid>
-        </Box>
+        </Grid>
       </Box>
     </Container>
+    </div>
   );
 }

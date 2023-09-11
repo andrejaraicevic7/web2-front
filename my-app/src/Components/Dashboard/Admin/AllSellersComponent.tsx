@@ -60,7 +60,7 @@ function AllSellersComponent() {
             accessorFn: (row:UserModel) => accountStatusString(row.accountStatus),
             header: 'Account Status',
             size: 150,
-          }
+          },
         ],
         [],
       );

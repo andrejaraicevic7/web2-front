@@ -9,7 +9,7 @@ import { CardHeader, Typography } from "@mui/material";
 import { Toaster} from 'react-hot-toast';
 import { GetSellerProducts } from "../../../Services/ProductService";
 
-const SellerProducts = () => {
+const AllProductsComponent = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("userToken");
     if(token == null || token == ''){
@@ -32,8 +32,8 @@ return (
             <div><Toaster/></div>
         <Row>
         {products.map((products, k) => (
-                <Col key={k} xs={12} md={4} lg={3}>
-                    <Card sx={{ maxWidth: 345 }}>
+                <Col key={k} xs={12} md={4} lg={6}>
+                    <Card sx={{  minWidth: 300 }}>
                         <CardHeader 
                         title={products['productName']}/>
                          <CardMedia
@@ -62,4 +62,4 @@ return (
     </Container>
 )
 }
-export default SellerProducts;
+export default AllProductsComponent;
