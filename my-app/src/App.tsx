@@ -40,6 +40,9 @@ function App() {
       secondary: {
         main: '#f50057',
       },
+      background: {
+        default: '#fff9f9',
+      },
     },
   });
   const navigate = useNavigate();
@@ -64,11 +67,11 @@ function App() {
   const DashboardLayoutAdmin = () => (
     <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-        <div style={{display: 'table'}}>
-          <div style={{ display: 'table-cell', width: '30%'}}>
+        <div style={{display: 'flex'}}>
+          <div style={{ display: 'inline-block', float: 'left'}}>
             <SidebarComponent/>
           </div>
-          <main style={{ display: 'table-cell', width:'70%'}}>
+          <main style={{ display: 'inline-block', float: 'left', flex: 1, marginLeft: '250px'}}>
             <Outlet /> 
           </main>
       </div>
@@ -77,26 +80,29 @@ function App() {
   const DashboardLayoutSeller = () => (
     <ThemeProvider theme={lightTheme}>
             <CssBaseline />
-        <div style={{display: 'table'}}>
-          <div style={{ display: 'table-cell', width: '30%'}}>
+          <div style=
+          {{
+            display: 'flex',      
+          }}>
+          <div style={{ display: 'inline-block', float: 'left'}}>
             <SidebarComponent/>
           </div>
-          <div style={{ display: 'table-cell', width:'70%'}}>
+          <main style={{ display: 'inline-block', float: 'left', flex: 1, marginLeft: '250px'}}>
             <Outlet /> 
-          </div>
+          </main>
       </div>
       </ThemeProvider>
   );
   const DashboardLayoutShopper= () => (
     <ThemeProvider theme={customTheme}>
             <CssBaseline />
-        <div style={{display: 'table'}}>
-          <div style={{ display: 'table-cell', width: '30%'}}>
+        <div style={{display: 'flex'}}>
+        <div style={{ display: 'inline-block', float: 'left'}}>
             <SidebarComponent/>
           </div>
-          <div style={{ display: 'table-cell', width:'70%'}}>
+          <main style={{ display: 'inline-block', float: 'left', flex: 1, marginLeft: '250px'}}>
             <Outlet /> 
-          </div>
+          </main>
       </div>
       </ThemeProvider>
   );

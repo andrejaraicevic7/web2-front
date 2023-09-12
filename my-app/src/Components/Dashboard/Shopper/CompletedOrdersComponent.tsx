@@ -13,7 +13,8 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import { toast, Toaster} from "react-hot-toast";
 import { OrderModel } from "../../../Models/OrderModel";
-import { CancelOrder, GetShopperNonCanceledOrders } from "../../../Services/OrderService";
+import { CancelOrder, GetShopperCompletedOrders, GetShopperNonCanceledOrders } from "../../../Services/OrderService";
+
 
 const CompletedOrdersComponent = () => {
     const navigate = useNavigate();
@@ -24,6 +25,15 @@ const CompletedOrdersComponent = () => {
     const user = localStorage.getItem("email");
 
     const [nonCanceledOrders, setNonCanceledOrders] = useState([]);
+    const [completedOrders, setCompletedOrders] = useState([]);
+
+    useEffect(() => {
+      const getCompletedOrders = async() => {
+        const response = await GetShopperCompletedOrders(user!);
+        setCompletedOrders(response.data);
+      }
+      getCompletedOrders();
+    }, []);
 
     useEffect(() => {
         const getNonCanceledOrders = async() =>{
@@ -32,28 +42,6 @@ const CompletedOrdersComponent = () => {
         }
         getNonCanceledOrders();
     }, []);
-
-    const columns = useMemo<MRT_ColumnDef<OrderModel>[]>(
-        () => [
-          {
-            accessorKey: 'id',
-            header: 'Id',
-            size: 150,
-          },
-          {
-            accessorKey: 'customerAddress',
-            header: 'Address',
-            size: 150,
-          },
-          {
-            accessorFn: (originalRow) => originalRow.orderedProducts.map(x => x.productName + '\n'),
-            header: 'Products',
-            size: 150,
-          },
-        ],
-        [],
-      );
-
 
     const cancelOrder = (order:OrderModel) => {
         var date = new Date(order.orderPlacedTime);
@@ -73,7 +61,7 @@ const CompletedOrdersComponent = () => {
     }
     
     return (
-        <div className="container mt-5 ml-5" style={{marginLeft: '150px'}}>
+        <div className="container mt-5 ml-5">
           <div><Toaster/></div>
             <Accordion defaultExpanded={true}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}
@@ -81,9 +69,9 @@ const CompletedOrdersComponent = () => {
                 id="panel1bh-header"
                 >
                 <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                  Past orders
+                  In progress orders
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>See past orders</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>Current orders</Typography>
               </AccordionSummary>
               <AccordionDetails>
               <Row>
@@ -104,6 +92,40 @@ const CompletedOrdersComponent = () => {
                                           Order address: {nonCanceledOrders['customerAddress']}
                                       </Typography>
                                       <Button disabled={new Date(nonCanceledOrders['orderCompletedTime']).getTime() < new Date().getTime()} variant="contained" size="small" color="error" type="submit" style={{marginLeft:"87px", marginTop:"10px"}} onClick={() => cancelOrder(nonCanceledOrders)}>Cancel</Button>
+                                  </CardContent>
+                              </Card>
+                          </Col>
+                      ))}
+                  </Row>
+              </AccordionDetails>
+            </Accordion> 
+            <Accordion defaultExpanded={false}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+                >
+                <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                  Completed orders
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>See completed orders </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+              <Row>
+                  {completedOrders.map((completedOrders, k) => (
+                          <Col key={k} xs={12} md={4} lg={3}>
+                              <Card sx={{ maxWidth: 345, width: 300 }}>
+                                  <CardHeader>
+                                  </CardHeader>
+                                      <CardContent>
+                                      <Typography variant="body2" color="text.secondary">
+                                          Order id: {completedOrders['id']}
+                                      </Typography>
+                                      <Typography variant="body2" color="text.secondary">
+                                          Order completed time: {completedOrders['orderCompletedTime']}
+                                      </Typography>
+                                      <Typography variant="body2" color="text.secondary">
+                                          Order address: {completedOrders['customerAddress']}
+                                      </Typography>
                                   </CardContent>
                               </Card>
                           </Col>

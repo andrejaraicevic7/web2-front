@@ -57,20 +57,39 @@ export default function () {
   return (
 
     
-<Container component="main" maxWidth="sm">
-      <div><Toaster/></div>
+    <div style={{ 
+      backgroundImage: `url("https://img.freepik.com/free-vector/abstract-sky-background-with-glowing-wave_1017-18388.jpg?w=1800&t=st=1694465219~exp=1694465819~hmac=49c2ab6a88d737540840a1eb8d3e2d810387ef77024ed0ab0527482939de7e2b")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
+    <Container component="main" maxWidth="lg">
+        <div><Toaster/></div>
       <Box
-        sx={{
-          boxShadow: 3,
-          borderRadius: 2,
-          px: 4,
-          py: 6,
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginLeft= "400px"
       >
+        <Grid container>
+          <CssBaseline />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Typography component="h1" variant="h6">
                 Create your account!
               </Typography>
@@ -194,6 +213,12 @@ export default function () {
                 </Grid>
               </Box>
             </Box>
+          </Grid>
+        </Grid>
+      </Box>
     </Container>
+    </div>
+
+
   );
 }

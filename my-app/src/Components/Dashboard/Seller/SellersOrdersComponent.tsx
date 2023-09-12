@@ -79,23 +79,7 @@ const SellerOrdersComponent = () => {
 
     return (
         <div className="container mt-5">
-        <Accordion defaultExpanded={true}>
-         <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              >
-              <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                Past orders
-              </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>See past orders</Typography>
-            </AccordionSummary>
-             <AccordionDetails>
-             <MaterialReactTable columns={columns} data={allOrders} />
-
-            </AccordionDetails>
-        </Accordion>
-        <Container>   
+        
          <Accordion
          defaultExpanded={true}>
          <AccordionSummary
@@ -118,7 +102,7 @@ const SellerOrdersComponent = () => {
                                     Customer: {newOrders['customerEmail']}
                                   </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                            Order id: {newOrders['id']}
+                                        Order id: {newOrders['id']}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
                                         Time left: 
@@ -135,7 +119,22 @@ const SellerOrdersComponent = () => {
                 </Row>
         </AccordionDetails>
         </Accordion>
-    </Container>
+        <Accordion defaultExpanded={false}>
+         <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              >
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                Past orders
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>See past orders</Typography>
+            </AccordionSummary>
+             <AccordionDetails>
+             <MaterialReactTable columns={columns} data={allOrders} />
+
+            </AccordionDetails>
+        </Accordion>
     </div>    
     )
 }

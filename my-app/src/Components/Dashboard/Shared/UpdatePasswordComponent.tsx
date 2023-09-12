@@ -42,7 +42,7 @@ export default function(){
       <Box
       sx={{
         mx: 1,
-        ml: 60
+        ml: 50
       }}
       >
         <Grid container>

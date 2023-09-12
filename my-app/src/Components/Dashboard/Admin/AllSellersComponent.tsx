@@ -19,7 +19,6 @@ function AllSellersComponent() {
       
     }
     const [sellers, setsellers] = useState([]);
-    const [shoppers, setShoppers] = useState([]);
     const [sellerId, setsellerId] = useState("");
     const columns = useMemo<MRT_ColumnDef<UserModel>[]>(
         () => [
@@ -125,19 +124,6 @@ function AllSellersComponent() {
           navigate("../../login");
         });
     }, []);
-    useEffect(() => {
-        const getUsers = async() =>{
-            const response = await GetShoppers()
-            setShoppers(response.data);
-        }
-        getUsers().catch(error => {
-          toast.error(error);
-          localStorage.removeItem("userToken");
-          localStorage.removeItem("email");
-          localStorage.removeItem("cart");
-          navigate("../../login");
-        });
-    }, []);
     return (
         <div className="container mt-5">
             <div><Toaster/></div>
@@ -149,31 +135,12 @@ function AllSellersComponent() {
               id="panel1bh-header"
               >
               <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                Shoppers
-              </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>See all the shoppers on the platform</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-
-                <MaterialReactTable columns={columns} data={shoppers}
-                
-                />
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-            defaultExpanded={true} >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-              >
-              <Typography sx={{ width: '33%', flexShrink: 0 }}>
                 Sellers
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>See all the sellers on the platform</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verification</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <label>Input a seller email</label>
+                <label>Seller email goes here</label>
                 <MDBInput placeholder="example@email.com" type="email" value={sellerId} onChange={(e)=>{setsellerId(e.target.value)}}/>
                 <Button variant="contained" sx={{marginRight: '20px', marginTop:'10px'}} color="success" onClick={() => verifySeller()}> Verify</Button>
                 

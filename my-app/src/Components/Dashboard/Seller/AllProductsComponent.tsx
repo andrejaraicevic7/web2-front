@@ -32,8 +32,8 @@ return (
             <div><Toaster/></div>
         <Row>
         {products.map((products, k) => (
-                <Col key={k} xs={12} md={4} lg={6}>
-                    <Card sx={{  minWidth: 300 }}>
+                <Col key={k} xs={12} md={4} lg={3}>
+                    <Card sx={{  maxWidth: 300, marginTop:"10px" }}>
                         <CardHeader 
                         title={products['productName']}/>
                          <CardMedia

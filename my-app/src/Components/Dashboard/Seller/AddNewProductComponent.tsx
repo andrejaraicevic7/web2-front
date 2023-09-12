@@ -39,13 +39,13 @@ export default function(){
         
     }
     return (
-        <div className="container mt-5">
+        <div className="container">
         <Container component="main" maxWidth="xl">
       <div><Toaster/></div>
       <Box
       sx={{
         mx: 1,
-        ml: 60
+        ml: 50
       }}
       >
         <Grid container>
@@ -54,9 +54,6 @@ export default function(){
             item
             sm={8}
             md={5}
-            component={Paper}
-            elevation={3}
-            square
           >
             <Box
               sx={{

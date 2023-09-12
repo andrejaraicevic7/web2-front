@@ -9,8 +9,8 @@ export async function ConfirmOrder(orderModel:OrderModel){
     return await axios.post(process.env.REACT_APP_API_URL+'/api/order/createOrder', orderModel)
 }
 
-export async function GetShopperCanceledOrders(email:string){
-    return await axios.get(process.env.REACT_APP_API_URL+'/api/order/getCanceledOrders', {params : {email: email}});
+export async function GetShopperCompletedOrders(email:string){
+    return await axios.get(process.env.REACT_APP_API_URL+'/api/order/getCompletedOrders', {params : {email: email}});
 
 }
 export async function GetShopperNonCanceledOrders(email:string){    

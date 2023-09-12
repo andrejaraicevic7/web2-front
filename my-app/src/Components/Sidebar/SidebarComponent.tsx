@@ -1,4 +1,4 @@
-import { Drawer, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Avatar, Drawer, IconButton, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,9 +10,14 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import StoreIcon from '@mui/icons-material/Store';
 import HistoryIcon from '@mui/icons-material/History';
 import jwt from 'jwt-decode';
+import { ChangeEvent, useState } from "react";
+import { GetUserData, UploadImage } from "../../Services/UserService";
+import toast, { Toaster } from "react-hot-toast";
 
 function SidebarComponent(){
 
+    const [imageUrl, setImageUrl] = useState("")
+    const loggedInEmail = localStorage.getItem("email");
     const navigate = useNavigate();
     const token =  localStorage.getItem("userToken");
     const decodedToken:any = jwt(token!);
@@ -21,6 +26,19 @@ function SidebarComponent(){
         navigate('../../login');
     }
 
+    GetUserData(loggedInEmail!).then(response =>{
+        setImageUrl(response.data.accountImage);
+    })
+    
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+        UploadImage(e.target.files[0], loggedInEmail!).then(response=>{
+            toast.success("Image updated!");
+            setImageUrl(response.data);
+            localStorage.setItem("imageUrl", response.data);
+        });
+        }
+    };
     if(decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "admin")
     {
         return(
@@ -32,7 +50,25 @@ function SidebarComponent(){
                     keepMounted: false,
                   }}
             >
+                <div><Toaster/></div>
                 <List>
+                    <ListItem>
+                        <ListItemText style={{textAlign: 'center'}}>
+                                Admin portal
+                        </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                        <div className="px-5">
+                                <div className="overlay px-5">
+                                    <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
+                                </div>
+                            <label htmlFor="icon-button-file">
+                                <IconButton color="primary" component="span">
+                                <Avatar alt={"img"} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 100, height: 100 }}/>
+                                </IconButton>
+                            </label>           
+                        </div>
+                    </ListItem>
                     <ListItem>
                         <ListItemButton href="/dashboard/sellers">
                             <ListItemIcon>
@@ -88,7 +124,25 @@ function SidebarComponent(){
                     keepMounted: false,
                   }}
             >
+                <div><Toaster/></div>
                 <List>
+                <ListItem>
+                    <ListItemText style={{textAlign: 'center'}}>
+                            Seller portal
+                    </ListItemText>
+                </ListItem>
+                <ListItem>
+                    <div className="px-5">
+                            <div className="overlay px-5">
+                                <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
+                            </div>
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" component="span">
+                            <Avatar alt={"img"} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 100, height: 100 }}/>
+                            </IconButton>
+                        </label>           
+                    </div>
+                </ListItem>
                     <ListItem>
                         <ListItemButton href="/dashboard/addProduct">
                             <ListItemIcon>
@@ -151,7 +205,25 @@ function SidebarComponent(){
                 keepMounted: false,
               }}
         >
+            <div><Toaster/></div>
             <List>
+            <ListItem>
+                    <ListItemText style={{textAlign: 'center'}}>
+                            Shopper portal
+                    </ListItemText>
+                </ListItem>
+                <ListItem>
+                    <div className="px-5">
+                            <div className="overlay px-5">
+                                <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
+                            </div>
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" component="span">
+                            <Avatar alt={"img"} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 100, height: 100 }}/>
+                            </IconButton>
+                        </label>           
+                    </div>
+                </ListItem>
                 <ListItem>
                     <ListItemButton href="/dashboard/newOrder">
                         <ListItemIcon>

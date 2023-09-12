@@ -53,14 +53,16 @@ export default function(){
 
     return (
         <div className="container mt-5">
-            <Typography variant="h5" color="text.primary" style={{marginLeft:"40px", marginTop:"40px"}}>
-                                Total price: {sum}
-            <TextField variant="filled" label="Delivery address" style={{marginLeft:"40px", marginBottom: "20px"}}  onChange={(e)=>{setAddress(e.target.value)}}/>
+                <Typography variant="h5" color="text.primary" style={{ marginBottom:"40px", display:"inline-block"}}>
+                            Total: {sum}
+                </Typography>
+            <div style={{display:"flex"}}>
+                <TextField variant="filled" label="Delivery address" style={{marginBottom:"40px",  display:"inline-block"}}  onChange={(e)=>{setAddress(e.target.value)}}/>
+                <Button variant="contained" color="success" type="submit" style={{marginLeft:"40px",marginBottom:"40px",  display:"inline-block"}} onClick={() => confirmOrderAction()}>CONFIRM ORDER</Button>
+            </div>
 
-              <Button variant="contained" size="small" color="success" type="submit" style={{marginLeft:"40px"}} onClick={() => confirmOrderAction()}>CONFIRM ORDER</Button>
-            </Typography>
           <Accordion
-          defaultExpanded={true}>
+          defaultExpanded={false}>
           <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1bh-content"
@@ -69,13 +71,13 @@ export default function(){
               <Typography sx={{ width: '33%', flexShrink: 0 }}>
                 Products in cart
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>See all the products in your cart</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Cart</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Row>
                 {products!.map((products, k) => (
                     <Col key={k} xs={12} md={4} lg={3}>
-                        <Card sx={{ maxWidth: 345 }}>
+                        <Card sx={{ maxWidth: 300, marginTop: "10px" }}>
                             <CardHeader 
                             title={products.productName}/>
                             <CardMedia
@@ -98,6 +100,8 @@ export default function(){
                 </Row>
                 </AccordionDetails>
         </Accordion>
+
+
         <div><Toaster/></div>
             
         </div>

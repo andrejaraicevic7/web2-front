@@ -1,9 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom';
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { Button, Container, CssBaseline, Grid, InputLabel, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -60,24 +58,14 @@ export default function(){
 
     }, []);
 
-   
-
+  
 }
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-        UploadImage(e.target.files[0], loggedInEmail!).then(response=>{
-            toast.success("Image updated!");
-            setImageUrl(response.data);
-        });
-        }
-    };
     return (
-        <Container  >
+        <Container>
       <div><Toaster/></div>
       <Box
       sx={{
-        mx: 1,
-        ml: 60
+        ml: 50
       }}
       >
         <Grid container>
@@ -104,19 +92,10 @@ export default function(){
               <Box
                 sx={{ mt: 0,  display: "flex",
                 flexDirection: "column",
-                alignItems: "center",}}
+                alignItems: "center",
+                minWidth:"300px"}}
                 
               >
-                <div className="px-5">
-                        <div className="overlay px-5">
-                            <input accept="image/*" id="icon-button-file" type="file" onChange={handleFileChange}/>
-                        </div>
-                    <label htmlFor="icon-button-file">
-                        <IconButton color="primary" component="span">
-                        <Avatar alt={name} src={process.env.REACT_APP_API_URL+'/'+imageUrl} sx={{ width: 150, height: 150 }}/>
-                        </IconButton>
-                    </label>           
-                </div>
                    <TextField
                   margin="normal"
                   disabled

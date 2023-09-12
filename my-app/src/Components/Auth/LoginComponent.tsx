@@ -1,19 +1,21 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Login } from "../../Services/AuthService";
+import { GoogleLogin, Login } from "../../Services/AuthService";
 import { LoginModel } from "../../Models/LoginModel";
 import { ProductModel } from "../../Models/ProductModel";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { CssBaseline, Paper } from "@mui/material";
+import { UserModel } from "../../Models/UserModel";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import GoogleButton from "react-google-button";
 
 export default function SignIn() {
 
@@ -56,6 +58,47 @@ export default function SignIn() {
     };
   }
   
+  
+  const googleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      if (codeResponse) {
+        axios
+            .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`, {
+                headers: {
+                    Authorization: `Bearer ${codeResponse.access_token}`,
+                    Accept: 'application/json'
+                }
+            })
+            .then((res) => {
+                const cart: ProductModel[] = [];
+                const accountModel:UserModel = new UserModel(res.data.given_name, res.data.family_name, "", res.data.email, new Date(), res.data.id, 0, res.data.picture);
+                GoogleLogin(accountModel).then(response =>{
+                  if(response.data == "User not verified"){
+                    toast.error("User not verified");
+                  }
+                  else{
+                    localStorage.setItem("userToken", response.data)
+                    localStorage.setItem("email", res.data.email);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    localStorage.setItem("imageUrl", res.data.picture);
+                    console.log(response);
+                    navigate("../dashboard");
+                    window.location.reload();
+                  }
+                }).catch(error => {
+                  window.location.reload();
+                  toast.error(error);
+                })
+
+            })
+            .catch((err) => console.log(err));
+    }
+    },
+    onError: (error) => console.log('Login Failed:', error),
+    onNonOAuthError: (error) => console.log('Login Failed:', error)
+  });
+
+
   return (
 <div style={{ 
       backgroundImage: `url("https://img.freepik.com/free-vector/abstract-sky-background-with-glowing-wave_1017-18388.jpg?w=1800&t=st=1694465219~exp=1694465819~hmac=49c2ab6a88d737540840a1eb8d3e2d810387ef77024ed0ab0527482939de7e2b")`,
@@ -146,6 +189,7 @@ export default function SignIn() {
                 >
                   Login
                 </Button>
+                <GoogleButton style={{marginLeft:"90px", marginTop:"10px"}} onClick={() => googleLogin()}/> 
                 <Grid container style={{marginTop:"10px"}}
                  display="flex"
                  justifyContent="center"
